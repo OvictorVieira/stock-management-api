@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: SmA2020!
+    ports:
+      - 15432:5432
+    volumes:
+      - ../dump_postgres:/var/www/html/stock-management-api/dump
+    networks:
+      - database-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: SmA2020!
+    ports:
+      - 16543:80
+    depends_on:
+      - postgres
+    networks:
+      - database-network
+
+  application:
+    tty: true
+    stdin_open: true
+    build: ./
+    container_name: stock-management-api
+    privileged: true
+    volumes:
+      - ../:/var/www/html/stock-management-api
+    ports:
+      - 3000:3000
+      - 80:80
+    depends_on:
+      - postgres
+    networks:
+      - database-network
+
+networks:
+  database-network:
+    driver: bridge
