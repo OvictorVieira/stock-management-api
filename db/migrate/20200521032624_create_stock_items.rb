@@ -1,4 +1,4 @@
-class CreateStockItem < ActiveRecord::Migration[6.0]
+class CreateStockItems < ActiveRecord::Migration[6.0]
   def change
     create_table :stock_items do |t|
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Devise::SessionsController', type: :request do
+RSpec.describe 'Sessions', type: :request do
 
   let(:user) { FactoryBot.create(:user, name: Faker::Name.name, email: "user@gmail.com") }
 
