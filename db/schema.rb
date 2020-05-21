@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_225340) do
+ActiveRecord::Schema.define(version: 2020_05_21_032624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "products", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "cost_price", precision: 8, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_products_on_name"
+  end
+
+  create_table "stock_items", force: :cascade do |t|
+    t.integer "quantity", null: false
+    t.bigint "store_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_stock_items_on_product_id"
+    t.index ["store_id"], name: "index_stock_items_on_store_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["address"], name: "index_stores_on_address"
+    t.index ["name"], name: "index_stores_on_name", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -31,4 +58,6 @@ ActiveRecord::Schema.define(version: 2020_05_20_225340) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "stock_items", "products"
+  add_foreign_key "stock_items", "stores"
 end
