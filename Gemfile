@@ -10,6 +10,11 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'rack-cors'
 
+gem 'devise'
+gem 'simple_token_authentication', '~> 1.17'
+
+gem 'active_model_serializers', '~> 0.10.0', require: true, github: 'rails-api/active_model_serializers', branch: '0-10-stable'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
@@ -30,6 +35,7 @@ group :test do
   gem 'capybara', '>= 2.15'
 
   gem "rubycritic", require: false
+  gem 'simplecov', require: false
 
   gem 'factory_bot_rails'
 
