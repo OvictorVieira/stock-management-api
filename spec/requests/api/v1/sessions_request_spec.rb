@@ -4,21 +4,29 @@ RSpec.describe 'Sessions', type: :request do
 
   let(:user) { FactoryBot.create(:user, name: Faker::Name.name, email: "user@gmail.com") }
 
+  let(:valid_headers) {
+    {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  }
+
+  let(:valid_params) {
+    {
+      'user': {
+        'email': user.email,
+        'password': user.password
+      }
+    }
+  }
+
   describe 'POST /api/v1/users/sign_in' do
 
     context 'when a user tries to login to the API' do
 
       it 'returns success' do
-        post user_session_path, headers: {
-                                  'Content-Type': 'application/json',
-                                  'Accept': 'application/json'
-                                },
-                                params: {
-                                  'user': {
-                                    'email': user.email,
-                                    'password': user.password
-                                  }
-                                },
+        post user_session_path, headers: valid_headers,
+                                params: valid_params,
                                 as: :json
 
         response_body = json_parser(response.body)
@@ -32,10 +40,7 @@ RSpec.describe 'Sessions', type: :request do
       end
 
       it 'returns unauthorized when using invalid email' do
-        post user_session_path, headers: {
-                                  'Content-Type': 'application/json',
-                                  'Accept': 'application/json'
-                                },
+        post user_session_path, headers: valid_headers,
                                 params: {
                                   'user': {
                                     'email': '____@exemple.com',
@@ -53,10 +58,7 @@ RSpec.describe 'Sessions', type: :request do
       end
 
       it 'returns unauthorized when using invalid password' do
-        post user_session_path, headers: {
-                                  'Content-Type': 'application/json',
-                                  'Accept': 'application/json'
-                                },
+        post user_session_path, headers: valid_headers,
                                 params: {
                                   'user': {
                                     'email': '____@exemple.com',
