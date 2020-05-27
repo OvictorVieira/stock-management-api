@@ -32,6 +32,10 @@ services:
     stdin_open: true
     build: ./
     container_name: stock-management-api
+    env_file:
+      - ../.env
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     privileged: true
     volumes:
       - ../:/var/www/html/stock-management-api
