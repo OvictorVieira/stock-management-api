@@ -1,19 +1,21 @@
 class Api::V1::StoresController < ApplicationController
 
-  DEFAULT_ITEMS_PER_PAGE = 10
-  INITIAL_PAGE = 1
+  include Paginator
+  include ErrorHandler
 
   before_action :set_page, :set_items_per_page
   before_action :load_store, only: [:show, :update, :destroy]
-
-  private_constant :DEFAULT_ITEMS_PER_PAGE, :INITIAL_PAGE
 
   def index
     @all_stores = Store.all
 
     total_stores = @all_stores.count
 
-    serialized_stores = StoreSerializer.serialize_collection(paginate_institutes, @page, @per_page, total_stores)
+    serialized_stores = StoreSerializer
+                          .serialize_collection(paginate_items(@all_stores),
+                                                @page,
+                                                @per_page,
+                                                total_stores)
 
     render json: serialized_stores
   end
@@ -50,20 +52,6 @@ class Api::V1::StoresController < ApplicationController
 
   private
 
-  def paginate_institutes
-    @institutes = @all_stores
-                    .page(@page)
-                    .per(@per_page)
-  end
-
-  def set_page
-    @page = params['page'] || INITIAL_PAGE
-  end
-
-  def set_items_per_page
-    @per_page = params['per_page'] || DEFAULT_ITEMS_PER_PAGE
-  end
-
   def load_store
     begin
       @store = Store.find_by_id(params[:id])
@@ -74,14 +62,6 @@ class Api::V1::StoresController < ApplicationController
 
       render json: build_error(error.message), status: :not_found
     end
-  end
-
-  def build_error(message)
-    {
-      'error': {
-        'message': message
-      }
-    }
   end
 
   def permitted_params
