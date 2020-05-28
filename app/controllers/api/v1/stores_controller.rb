@@ -13,7 +13,6 @@ class Api::V1::StoresController < ApplicationController
                                                 @page,
                                                 @per_page,
                                                 total_stores)
-
     render json: serialized_stores
   end
 
