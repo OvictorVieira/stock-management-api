@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::API
+
+  include Paginator
+  include ErrorHandler
+
   respond_to :json
 
   acts_as_token_authentication_handler_for User

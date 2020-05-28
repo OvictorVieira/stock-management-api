@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Stores', type: :request do
 
-  let(:user) { FactoryBot.create(:user, name: Faker::Name.name, email: 'user@gmail.com') }
+  let(:user) { create(:user, name: Faker::Name.name, email: 'user@gmail.com') }
 
   let(:valid_headers) {
     {
@@ -39,7 +39,7 @@ RSpec.describe 'Stores', type: :request do
     end
   end
 
-  describe 'GET /api/v1/stores/show' do
+  describe 'GET /api/v1/stores/show/:id' do
 
     let!(:store) { create(:store) }
 
@@ -96,7 +96,7 @@ RSpec.describe 'Stores', type: :request do
     end
   end
 
-  describe 'PATCH /api/v1/stores/update' do
+  describe 'PATCH /api/v1/stores/update/:id' do
 
     let!(:store) { create(:store, valid_attributes) }
 
@@ -124,7 +124,7 @@ RSpec.describe 'Stores', type: :request do
     end
   end
 
-  describe 'DELETE /api/v1/stores/destroy' do
+  describe 'DELETE /api/v1/stores/destroy/:id' do
 
     let!(:store) { create(:store, valid_attributes) }
 
