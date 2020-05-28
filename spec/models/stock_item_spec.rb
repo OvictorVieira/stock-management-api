@@ -29,5 +29,11 @@ RSpec.describe StockItem, type: :model do
 
       expect(stock_item).to_not be_valid
     end
+
+    it "is not valid without a command" do
+      stock_item.command = nil
+
+      expect(stock_item).to_not be_valid
+    end
   end
 end
