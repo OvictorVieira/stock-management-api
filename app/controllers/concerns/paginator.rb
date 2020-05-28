@@ -1,7 +1,7 @@
 module Paginator
 
-  DEFAULT_ITEMS_PER_PAGE = 10
   INITIAL_PAGE = 1
+  DEFAULT_ITEMS_PER_PAGE = 10
 
   private_constant :DEFAULT_ITEMS_PER_PAGE, :INITIAL_PAGE
 

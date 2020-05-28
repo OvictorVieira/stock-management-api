@@ -1,9 +1,6 @@
 class Api::V1::StoresController < ApplicationController
 
-  include Paginator
-  include ErrorHandler
-
-  before_action :set_page, :set_items_per_page
+  before_action :set_page, :set_items_per_page, only: :index
   before_action :load_store, only: [:show, :update, :destroy]
 
   def index
@@ -12,8 +9,10 @@ class Api::V1::StoresController < ApplicationController
     total_stores = @all_stores.count
 
     serialized_stores = StoreSerializer
-                          .serialize_collection(paginate(@all_stores), @page, @per_page, total_stores)
-
+                          .serialize_collection(paginate(@all_stores),
+                                                @page,
+                                                @per_page,
+                                                total_stores)
     render json: serialized_stores
   end
 
@@ -53,9 +52,9 @@ class Api::V1::StoresController < ApplicationController
     begin
       @store = Store.find_by_id(params[:id])
 
-      raise ::Stores::RecordNotFound.new(params[:id]) if @store.blank?
+      raise Stores::RecordNotFound.new(params[:id]) if @store.blank?
 
-    rescue ::Stores::RecordNotFound => error
+    rescue Stores::RecordNotFound => error
 
       render json: build_error(error.message), status: :not_found
     end
