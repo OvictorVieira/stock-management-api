@@ -1,0 +1,8 @@
+pt-BR:
+  stock_items:
+    label:
+      stock_item: 'Quantidade de Items em estoque'
+    errors:
+      invalid_product: 'Não foi possível encontrar um Produto com o id informado, por favor informe um id válido.'
+      invalid_quantity: 'O valor informado para a quantidade não é válido. Por favor
+                           informe um valor inteiro positivo válido.'
