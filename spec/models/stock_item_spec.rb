@@ -4,9 +4,9 @@ RSpec.describe StockItem, type: :model do
 
   context 'validations tests' do
 
-    let(:product) { FactoryBot.create(:product) }
-    let(:store) { FactoryBot.create(:store) }
-    let(:stock_item) { FactoryBot.create(:stock_item, product: product, store: store) }
+    let!(:product) { create(:product) }
+    let!(:store) { create(:store, email: 'store@exemple.com') }
+    let!(:stock_item) { create(:stock_item, product: product, store: store, command: StockItem::ADDED) }
 
     it "is valid with valid attributes" do
       expect(stock_item).to be_valid

@@ -2,9 +2,12 @@ class StockItem < ApplicationRecord
 
   validates_presence_of :quantity, :command, :product_id, :store_id
 
+  ADDED = 0
+  REMOVED = 1
+
   enum command: {
-      added: 0,
-      removed: 1
+      added: ADDED,
+      removed: REMOVED
   }
 
   belongs_to :store

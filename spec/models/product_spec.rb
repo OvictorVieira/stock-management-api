@@ -27,10 +27,13 @@ RSpec.describe Product, type: :model do
     let(:quantity_items) { 10 }
 
     let!(:product) { create(:product) }
-    let!(:store) { create(:store) }
+    let!(:store) { create(:store, email: 'user@exemple.com') }
     let(:create_stock_item) {
       -> {
-        quantity_items.times { FactoryBot.create(:stock_item, product: product, store: store) }
+        quantity_items.times { FactoryBot.create(:stock_item,
+                                                 product: product,
+                                                 store: store,
+                                                 command: StockItem::ADDED) }
       }
     }
 
