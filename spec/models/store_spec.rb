@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Store, type: :model do
-  context 'validations tests' do
+  let(:store) { FactoryBot.create(:store, email: 'store@exemple.com') }
 
-    let(:store) { FactoryBot.create(:store) }
+  context 'validations tests' do
 
     it "is valid with valid attributes" do
       expect(store).to be_valid
@@ -20,13 +20,18 @@ RSpec.describe Store, type: :model do
 
       expect(store).to_not be_valid
     end
+
+    it "is not valid without a password" do
+      store.password = nil
+
+      expect(store).to_not be_valid
+    end
   end
 
   context 'relationship with stock items' do
 
     let(:quantity_items) { 15 }
 
-    let!(:store) { create(:store) }
     let!(:product) { create(:product) }
     let(:create_stock_item) {
       -> {
