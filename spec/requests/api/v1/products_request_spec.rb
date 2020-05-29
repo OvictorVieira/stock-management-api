@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Products', type: :request do
 
-  let(:user) { create(:user, name: Faker::Name.name, email: 'user@gmail.com') }
+  let(:store) { create(:store, email: 'store@exemple.com') }
 
   let(:valid_headers) {
     {
       'ACCEPT': 'application/json',
-      'X-User-Email': user.email,
-      'X-User-Token': user.authentication_token
+      'X-store-Email': store.email,
+      'X-store-Token': store.authentication_token
     }
   }
 
@@ -19,14 +19,18 @@ RSpec.describe 'Products', type: :request do
     }
   }
 
-  describe 'GET /api/v1/products/index' do
+  describe 'GET /api/v1/products' do
 
     it 'renders a successful response' do
       total_products = 30
       items_per_page = 4
       page = '3'
 
-      total_products.times { FactoryBot.create(:product) }
+      total_products.times do
+        Products::ProductService.create(name: valid_attributes[:name],
+                                        cost_price: valid_attributes[:cost_price],
+                                        store: store)
+      end
 
       get api_v1_products_url, headers: valid_headers,
                                params: {

@@ -4,12 +4,12 @@ class Api::V1::ProductsController < ApplicationController
   before_action :load_product, only: [:show, :update, :destroy]
 
   def index
-    @all_products = Product.all
+    all_products = current_store.products
 
-    total_products = @all_products.count
+    total_products = all_products.count
 
     serialized_products = ProductSerializer
-                          .serialize_collection(paginate(@all_products),
+                          .serialize_collection(paginate(all_products),
                                                 @page,
                                                 @per_page,
                                                 total_products)
@@ -25,7 +25,9 @@ class Api::V1::ProductsController < ApplicationController
     begin
       permitted = permitted_params
 
-      product = Product.create!(permitted)
+      product = Products::ProductService.create(name: permitted[:name],
+                                                cost_price: permitted[:cost_price],
+                                                store: current_store)
 
       render json: product, status: :created
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_140636) do
+ActiveRecord::Schema.define(version: 2020_05_29_203934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_140636) do
   end
 
   create_table "stock_items", force: :cascade do |t|
-    t.integer "quantity", null: false
+    t.integer "quantity", default: 0, null: false
     t.bigint "store_id", null: false
     t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
