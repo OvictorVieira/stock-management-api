@@ -7,7 +7,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 
 require_relative '../config/spec/support/factory_bot'
-require_relative '../config/spec/support/controller_macros'
 require 'faker'
 
 
