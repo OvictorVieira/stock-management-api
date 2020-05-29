@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Store, type: :model do
-  let(:store) { FactoryBot.create(:store, email: 'store@exemple.com') }
+  let!(:store) { create(:store, email: 'store@exemple.com') }
 
   context 'validations tests' do
 
@@ -35,7 +35,10 @@ RSpec.describe Store, type: :model do
     let!(:product) { create(:product) }
     let(:create_stock_item) {
       -> {
-        quantity_items.times { FactoryBot.create(:stock_item, product: product, store: store) }
+        quantity_items.times { FactoryBot.create(:stock_item,
+                                                 product: product,
+                                                 store: store,
+                                                 command: StockItem::ADDED) }
       }
     }
 
