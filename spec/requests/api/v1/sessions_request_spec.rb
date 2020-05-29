@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Sessions', type: :request do
 
-  let(:user) { FactoryBot.create(:user, name: Faker::Name.name, email: "user@gmail.com") }
+  let(:store) { FactoryBot.create(:store, name: Faker::Name.name, email: "store@exemple.com") }
 
   let(:valid_headers) {
     {
@@ -13,19 +13,19 @@ RSpec.describe 'Sessions', type: :request do
 
   let(:valid_params) {
     {
-      'user': {
-        'email': user.email,
-        'password': user.password
+      'store': {
+        'email': store.email,
+        'password': store.password
       }
     }
   }
 
-  describe 'POST /api/v1/users/sign_in' do
+  describe 'POST /api/v1/stores/sign_in' do
 
-    context 'when a user tries to login to the API' do
+    context 'when a store tries to login to the API' do
 
       it 'returns success' do
-        post user_session_path, headers: valid_headers,
+        post store_session_path, headers: valid_headers,
                                 params: valid_params,
                                 as: :json
 
@@ -40,11 +40,11 @@ RSpec.describe 'Sessions', type: :request do
       end
 
       it 'returns unauthorized when using invalid email' do
-        post user_session_path, headers: valid_headers,
+        post store_session_path, headers: valid_headers,
                                 params: {
-                                  'user': {
+                                  'store': {
                                     'email': '____@exemple.com',
-                                    'password': user.password
+                                    'password': store.password
                                   }
                                 },
                                 as: :json
@@ -58,11 +58,11 @@ RSpec.describe 'Sessions', type: :request do
       end
 
       it 'returns unauthorized when using invalid password' do
-        post user_session_path, headers: valid_headers,
+        post store_session_path, headers: valid_headers,
                                 params: {
-                                  'user': {
+                                  'store': {
                                     'email': '____@exemple.com',
-                                    'password': user.password
+                                    'password': store.password
                                   }
                                 },
                                 as: :json
