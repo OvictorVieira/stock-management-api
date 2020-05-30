@@ -6,3 +6,4 @@ pt-BR:
       invalid_product: 'Não foi possível encontrar um Produto com o id informado, por favor informe um id válido.'
       invalid_quantity: 'O valor informado para a quantidade não é válido. Por favor
                            informe um valor inteiro positivo válido.'
+      insufficient_quantity: 'Estoque insuficiente.'
