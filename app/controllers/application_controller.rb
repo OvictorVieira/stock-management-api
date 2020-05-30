@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::API
 
+  respond_to :json
+
   include Paginator
   include ErrorHandler
-
-  respond_to :json
 
   acts_as_token_authentication_handler_for Store
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -11,6 +11,6 @@ class ApplicationController < ActionController::API
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :address])
   end
 end

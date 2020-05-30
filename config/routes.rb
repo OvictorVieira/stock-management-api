@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   scope :api do
     scope :v1 do
 
-      devise_for :stores
+      devise_for :stores, skip: :sessions
+
+      devise_scope :store do
+        post '/stores/sign_in', to: 'devise/sessions#create', as: :create_store_session
+        delete '/stores/sign_out', to: 'api/v1/sessions#sign_out', as: :sign_out_store_session
+      end
     end
   end
 
