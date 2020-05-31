@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Products', type: :request do
 
-  let(:store) { create(:store, email: 'store@exemple.com') }
+  let!(:store) { create(:store, email: 'store@exemple.com') }
 
   let(:valid_headers) {
     {
       'ACCEPT': 'application/json',
-      'X-store-Email': store.email,
-      'X-store-Token': store.authentication_token
+      'X-Store-Email': store.email,
+      'X-Store-Token': store.authentication_token
     }
   }
 
