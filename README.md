@@ -141,7 +141,7 @@ $ rspec
 ## CI/CD
 
 A aplicação está hospedada no Heroku e o deploy foi feito através das 
-[Actions](https://github.com/OvictorVieira/stock-management-api/actions/new) do Github.
+[Actions](https://github.com/OvictorVieira/stock-management-api/actions) do Github.
 
 ## Arquitetura do Banco de Dados
 
