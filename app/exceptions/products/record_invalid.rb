@@ -1,0 +1,1 @@
+class Products::RecordInvalid < StandardError; end

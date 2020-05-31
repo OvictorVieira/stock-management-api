@@ -31,7 +31,7 @@ class Api::V1::ProductsController < ApplicationController
 
       render json: product, status: :created
 
-    rescue ActiveRecord::RecordInvalid, StandardError => error
+    rescue ActiveRecord::RecordInvalid, Products::RecordInvalid => error
 
       render json: build_error(error.message), status: :unprocessable_entity
     end
