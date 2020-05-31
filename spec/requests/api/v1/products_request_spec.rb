@@ -47,7 +47,7 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'GET /api/v1/products/show/:id' do
+  describe 'GET /api/v1/products/:id' do
 
     let!(:product) { create(:product) }
 
@@ -82,7 +82,7 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'POST /api/v1/products/create' do
+  describe 'POST /api/v1/products/' do
 
     context 'with valid parameters' do
 
@@ -112,7 +112,7 @@ RSpec.describe 'Products', type: :request do
     end
   end
 
-  describe 'PATCH /api/v1/products/update/:id' do
+  describe 'PATCH /api/v1/products/:id' do
 
     let!(:product) { create(:product, valid_attributes) }
 
@@ -120,14 +120,16 @@ RSpec.describe 'Products', type: :request do
 
       let(:new_attributes) {
         {
-          name: Faker::Name.name,
-          cost_price: rand(10.00...1000.00).round(2).to_s
+          'product': {
+            name: Faker::Name.name,
+            cost_price: rand(10.00...1000.00).round(2).to_s
+          }
         }
       }
 
       it 'updates the requested product' do
 
-        patch api_v1_product_url(product.id), params: { product: new_attributes },
+        patch api_v1_product_url(product.id), params: new_attributes,
                                               headers: valid_headers, as: :json
 
         product.reload
@@ -135,13 +137,36 @@ RSpec.describe 'Products', type: :request do
         response_body = json_parser(response.body)
 
         expect(response_body['id']).to      eql(product.id)
-        expect(response_body['name']).to    eql(new_attributes[:name])
-        expect(response_body['cost_price']).to eql(new_attributes[:cost_price])
+        expect(response_body['name']).to    eql(new_attributes[:product][:name])
+        expect(response_body['cost_price']).to eql(new_attributes[:product][:cost_price])
+      end
+    end
+
+    context 'with invalid parameters' do
+
+      let(:new_attributes) {
+        {
+          'invalid_key': {
+            name: Faker::Name.name,
+            cost_price: rand(10.00...1000.00).round(2).to_s
+          }
+        }
+      }
+
+      it 'updates the requested product' do
+
+        patch api_v1_product_url(product.id), params: new_attributes,
+                                              headers: valid_headers, as: :json
+
+        response_body = json_parser(response.body)
+
+        expect(response).to have_http_status :unprocessable_entity
+        expect(response_body['errors']).to eql [{"product"=>["não pode ficar vazio"]}]
       end
     end
   end
 
-  describe 'DELETE /api/v1/products/destroy/:id' do
+  describe 'DELETE /api/v1/products/:id' do
 
     let!(:product) { create(:product, valid_attributes) }
 
