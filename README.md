@@ -167,4 +167,4 @@ dos itens do produto e calculamos a quantidade de itens em tempo real.
 
 The [MIT License]() (MIT)
 
-Copyright :copyright: 2020 - Gerenciado de estoque
+Copyright :copyright: 2020 - Gerenciador de estoque
